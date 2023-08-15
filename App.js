@@ -18,6 +18,8 @@ import AminoQuiz from './views/amino-quiz';
 import AminoList from './views/amino-list';
 import AminoView from './views/amino-view';
 import AminoStats from './views/amino-stats';
+import PathwayHome from './views/pathway-home';
+import Contact from './views/contact';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +28,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Pathways" component={Pathways}/>
+        <Stack.Screen name="Pathways" component={PathwayHome}/>
+        <Stack.Screen name="Pathway List" component={Pathways}/>
         <Stack.Screen name="Learn" component={Learn}/>
         <Stack.Screen name="Quiz" component={Quiz}/>
         <Stack.Screen name="Quit" component={Quit}/>
@@ -39,6 +42,7 @@ export default function App() {
         <Stack.Screen name="Amino List" component={AminoList}/>
         <Stack.Screen name="Amino View" component={AminoView}/>
         <Stack.Screen name="Amino Stats" component={AminoStats}/>
+        <Stack.Screen name="Contact" component={Contact}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

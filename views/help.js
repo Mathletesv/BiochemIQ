@@ -19,4 +19,4 @@ export default Help = ({navigation}) => {
   );
 }
 
-const paths_array = ['Electron Transport Chain', 'Glycolysis', 'Fermentation', 'Krebs Cycle', 'Oxidative Phosphorylation', 'Gluconeogensis', 'Glycogenolysis', 'Glycogenesis', 'Fatty Acid Synthesis', 'Pentose Phosphate Pathway']
+const paths_array = ['Electron Transport Chain', 'Glycolysis', 'Fermentation', 'Krebs Cycle', 'Gluconeogensis', 'Glycogenolysis', 'Glycogenesis', 'Pentose Phosphate Pathway']

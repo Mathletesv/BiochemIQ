@@ -2,7 +2,6 @@ import * as React from 'react';
 import { TouchableOpacity, Keyboard, StyleSheet, View, Text, Animated, Button, Image, TextInput, ImageBackground, Pressable } from 'react-native';
 // @ts-ignore
 import { ReactNativeZoomableView } from '@openspacelabs/react-native-zoomable-view';
-import ATP_Synthesis from '../assets/quiz-images/ATP-Synthesis.png';
 import Krebs_Cycle from '../assets/quiz-images/Krebs-Cycle.png';
 import Fermentation from '../assets/quiz-images/Fermentation.png';
 import Glycolysis from '../assets/quiz-images/Glycolysis.png';
@@ -187,12 +186,20 @@ function checkSubmit(input, text, path, setAccuracy, corr, highlighted, viewRef,
 
   if (text == current["Input"][index][2].replaceAll(" ", "").replaceAll("\n", "").toLowerCase()) {
     setAccuracy(2);
-    if (correct + 1 == current["Input"].length) {
-      
-      return;
-    } 
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
 
+    input.current?.clear();
+    current["Input"][index][3] = 4;
+    current["Index"] = 0;
+    while (current["Index"] < current["Input"].length && current["Input"][current["Index"]][3] >= 3) current["Index"]++
+    console.log(current["Index"])
+    if (current["Index"] == current["Input"].length) {
+      nav.navigate('Success', {pathway: path, total: current["Input"].length, correct: correct + 1, time: seconds})
+      console.log('success')
+      return;
+    }
+    current["Input"][current["Index"]][3] = 1;
+    updateCorrect(correct + 1);
     setTimeout(() => { 
       setAccuracy(0)
       highlighted?.current.measure( (fx, fy, width, height, px, py) => {
@@ -200,17 +207,6 @@ function checkSubmit(input, text, path, setAccuracy, corr, highlighted, viewRef,
       })
       
     }, 1000)
-
-    input.current?.clear();
-    current["Input"][index][3] = 4;
-    current["Index"] = 0;
-    while (current["Index"] < current["Input"].length && current["Input"][current["Index"]][3] >= 3) current["Index"]++
-    if (current["Index"] == current["Input"].length) {
-      nav.navigate('Success', {pathway: path, total: current["Input"].length, correct: correct + 1, time: seconds})
-      return;
-    }
-    current["Input"][current["Index"]][3] = 1;
-    updateCorrect(correct + 1);
   }
   else {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error)
@@ -218,11 +214,20 @@ function checkSubmit(input, text, path, setAccuracy, corr, highlighted, viewRef,
     if (current["Input"][index][3] == 3) {
       current["Index"] = 0;
       while (current["Index"] < current["Input"].length && current["Input"][current["Index"]][3] >= 3) current["Index"]++
-      if (current["Index"] == current["Input"].length) nav.navigate('Success', {pathway: path, total: current["Input"].length, correct, time: seconds})
+      if (current["Index"] == current["Input"].length) {
+        nav.navigate('Success', {pathway: path, total: current["Input"].length, correct, time: seconds})
+        return;
+      }
       current["Input"][current["Index"]][3] = 1;
     }
     setAccuracy(-2);
-    setTimeout(() => { setAccuracy(0) }, 1000)
+    setTimeout(() => { 
+      setAccuracy(0)
+      highlighted?.current.measure( (fx, fy, width, height, px, py) => {
+        viewRef.current?.moveTo(px, py);
+      })
+      
+    }, 1000)
   }
 }
 

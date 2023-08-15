@@ -7,12 +7,9 @@ export default HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>BiochemIQ</Text>
-      <CustomButton text="View Pathways" onPress={() => navigation.navigate('Pathways')}/>
-      <CustomButton text="Random Pathway Review" onPress={() => navigation.navigate('Learn', {pathway: paths_array[Math.floor(Math.random() * paths_array.length)]})}/>
-      <CustomButton text="Random Pathway Quiz" onPress={() => navigation.navigate('Quiz', {pathway: paths_array[Math.floor(Math.random() * paths_array.length)]})}/>
-      <CustomButton text="Pathway Quiz Help" onPress={() => navigation.navigate('Help')}/>
+      <CustomButton text="Pathways" onPress={() => navigation.navigate('Pathways')}/>
       <CustomButton text="Amino Acids" onPress={() => navigation.navigate('Amino Acids')}/>
-      <CustomButton text="Stats"/>
+      <CustomButton text="Contact Me" onPress={() => navigation.navigate('Contact')}/>
       
       <StatusBar style="auto" />
     </View>

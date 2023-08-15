@@ -2,7 +2,6 @@ import * as React from 'react';
 import { StyleSheet, View, Text, Image, Animated, Button } from 'react-native';
 // @ts-ignore
 import { ReactNativeZoomableView } from '@openspacelabs/react-native-zoomable-view';
-import ATP_Synthesis from '../assets/pathway-images/ATP-Synthesis.png';
 import Krebs_Cycle from '../assets/pathway-images/Krebs-Cycle.png';
 import Glycolysis from '../assets/pathway-images/Glycolysis.png';
 import Fermentation from '../assets/pathway-images/Fermentation.png';

@@ -25,11 +25,13 @@ export default AminoStats = ({navigation, route}) => {
       <Text style={styles.header}>Learning Stats</Text>
       {counts.length > 0 ? 
         <ScrollView>
+          <Text style={[styles.rowText, {color: "#b50000"}]}>Unknown</Text>
           {
-            counts.map((value) => (<View style={styles.row} key={value[0]}>
-                <Text style={[styles.rowText, {color: value[1] > 5 ? value[1] > 7 ? value[1] > 12 ? value[1] > 15 ? "#b50000" : "#ff1900" : "#fff700" : "#11ff00" : "#0b8f01" }]}>{value[0]}: {value[1]} times</Text>
-              </View>))
+            counts.map((value) => (value[1] != 10 ? <View style={styles.row} key={value[0]}>
+                <Text style={[styles.rowText, {color: value[1] > 5 ? value[1] > 7 ? value[1] > 12 ? value[1] > 15 ? "#b50000" : "#ff1900" : "#fff700" : "#11ff00" : "#0b8f01" }]}>{value[0]}: {(20 - value[1]) / 10} Rating</Text>
+              </View> : null))
           }
+          <Text style={[styles.rowText, {color: "#0b8f01"}]}>Known</Text>
         </ScrollView>
       : <View>
         <Text style={styles.rowText}>You have not done any learning yet.</Text>

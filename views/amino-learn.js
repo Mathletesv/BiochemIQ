@@ -41,7 +41,12 @@ export default AminoLearn = ({navigation, route}) => {
         <TextInput value={valTwo} editable={!submitFlag} autoCorrect={false} autoComplete={false} spellCheck={false} maxLength={3} onChangeText={(text) => { updateValTwo(text) }} style={[styles.input, {width: '20%', backgroundColor: submitFlag ? valTwo == AMINO_NAMES[amino][0] ? "#1fff5a" : "#ff1f1f" : null}]} placeholder="3-Letter"/>}
         {rand == 2 ? <Text style={[styles.rowText, {width: '20%', textAlign: 'center'}]}>{AMINO_NAMES[amino][1]}</Text> : 
         <TextInput value={valThree} editable={!submitFlag} autoCorrect={false} autoComplete={false} spellCheck={false} maxLength={1} onChangeText={(text) => { updateValThree(text) }} style={[styles.input, {width: '20%', backgroundColor: submitFlag ? valThree == AMINO_NAMES[amino][1] ? "#1fff5a" : "#ff1f1f" : null}]} placeholder="1-Letter"/>}
-        <CustomButton disabled={submitFlag} style={{height: 30}} text="Check" onPress={() => { updateSubmitFlag(true); }}/>
+        <CustomButton disabled={submitFlag} style={{height: 30}} text="Check" onPress={() => { updateSubmitFlag(true);
+          let accuracy = (rand != 0) ? valOne == amino ? 1 : -1: 0 + (rand != 1) ? valTwo == AMINO_NAMES[amino][0] ? 1 : -1: 0 + (rand != 2) ? valThree == AMINO_NAMES[amino][1] ? 1 : -1: 0;
+          let newCounts = JSON.parse(JSON.stringify(counts));
+          newCounts[amino] += accuracy;
+          updateCounts(newCounts);
+          setCounts(JSON.stringify(newCounts)); }}/>
       </View>}
       {
         submitFlag ? <View style={styles.row}>
@@ -50,11 +55,6 @@ export default AminoLearn = ({navigation, route}) => {
         {rand == 2 || valThree == AMINO_NAMES[amino][1] ? <Text style={[styles.rowText, {width: '20%', textAlign: 'center', marginHorizontal: 5}]}></Text> : <Text style={[styles.rowText, {width: '20%', textAlign: 'center'}]}>{AMINO_NAMES[amino][1]}</Text>}
         <CustomButton style={{height: 30}} text="Reset" onPress={() => { 
           updateSubmitFlag(false); updateValOne(""); updateValTwo(""); updateValThree(""); updateSelectionOne(""); updateSelectionTwo(""); updateAmino(randArray[Math.floor(Math.random() * randArray.length)]); updateSubmitFlagTwo(false); updateRand(Math.floor(Math.random() * 3));
-          let accuracy = (rand != 0) ? valOne == amino ? 1 : -1: 0 + (rand != 1) ? valTwo == AMINO_NAMES[amino][0] ? 1 : -1: 0 + (rand != 2) ? valThree == AMINO_NAMES[amino][1] ? 1 : -1: 0;
-          let newCounts = JSON.parse(JSON.stringify(counts));
-          newCounts[amino] += accuracy;
-          updateCounts(newCounts);
-          setCounts(JSON.stringify(newCounts));
         }}/>
       </View> : null
       }
@@ -82,15 +82,17 @@ export default AminoLearn = ({navigation, route}) => {
       }
       {
         selectionTwo ? <View style={styles.row}>
-          <CustomButton style={{height: 30}} text="Check" disabled={submitFlagTwo} onPress={() => { updateSubmitFlagTwo(true) }}/>
-          {submitFlagTwo ? <CustomButton style={{height: 30}} text="Continue" onPress={() => { 
-            updateSubmitFlag(false); updateValOne(""); updateValTwo(""); updateValThree(""); updateSubmitFlagTwo(false); updateSelectionOne(""); updateSelectionTwo(""); updateSelectionThree(""); updateAmino(randArray[Math.floor(Math.random() * randArray.length)]); updateRand(Math.floor(Math.random() * 3));
+          <CustomButton style={{height: 30}} text="Check" disabled={submitFlagTwo} onPress={() => { 
+            updateSubmitFlagTwo(true)
             let accuracy = ((rand != 0) ? valOne == amino ? 1 : -1: 0) + ((rand != 1) ? valTwo == AMINO_NAMES[amino][0] ? 1 : -1: 0) + ((rand != 2) ? valThree == AMINO_NAMES[amino][1] ? 1 : -1: 0) + (selectionOne == AMINO_PROPERTIES[amino][0] ? 1 : -1) + (selectionTwo == AMINO_PROPERTIES[amino][1] ? 1 : -1) + (selectionThree == AMINO_PROPERTIES[amino][2] ? 1 : -1);
             let newCounts = JSON.parse(JSON.stringify(counts));
             newCounts[amino] -= accuracy;
             console.log(accuracy, newCounts[amino]);
             updateCounts(newCounts);
             setCounts(JSON.stringify(newCounts));
+          }}/>
+          {submitFlagTwo ? <CustomButton style={{height: 30}} text="Continue" onPress={() => { 
+            updateSubmitFlag(false); updateValOne(""); updateValTwo(""); updateValThree(""); updateSubmitFlagTwo(false); updateSelectionOne(""); updateSelectionTwo(""); updateSelectionThree(""); updateAmino(randArray[Math.floor(Math.random() * randArray.length)]); updateRand(Math.floor(Math.random() * 3));
           }}/> : null }
         </View>: null
       }

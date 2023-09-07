@@ -9,7 +9,6 @@ export default HomeScreen = ({navigation}) => {
       <Text style={styles.header}>BiochemIQ</Text>
       <CustomButton text="Pathways" onPress={() => navigation.navigate('Pathways')}/>
       <CustomButton text="Amino Acids" onPress={() => navigation.navigate('Amino Acids')}/>
-      <CustomButton text="Contact Me" onPress={() => navigation.navigate('Contact')}/>
       
       <StatusBar style="auto" />
     </View>

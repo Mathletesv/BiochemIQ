@@ -4,8 +4,7 @@ import { ScrollView, Switch, Text, View, TouchableOpacity, Image } from 'react-n
 import { CustomButton } from '../utils/components';
 import { styles } from '../utils/styles';
 import { AMINO_NAMES, AMINO_PROPERTIES } from '../utils/amino-const';
-import { TextInput } from 'react-native-gesture-handler';
-import ReactNativeZoomableView from '@openspacelabs/react-native-zoomable-view/src/ReactNativeZoomableView';
+import { TextInput } from 'react-native';
 
 export default AminoQuiz = ({navigation, route}) => {
   [stage, updateStage] = React.useState(0);
@@ -65,8 +64,8 @@ export default AminoQuiz = ({navigation, route}) => {
             {
               Object.keys(quizData.naming).map((value) => (<View><View style={styles.row} key={value}>
                   <Text style={styles.rowText}>{value}: </Text>
-                  <TextInput editable={!submit} selectTextOnFocus={!submit} autoComplete="off" autoCorrect={false} spellCheck={false} style={[styles.input, {backgroundColor: submit ? quizValues.naming[value] && quizData.naming[value][0].toLowerCase() == quizValues.naming[value][quizData.naming[value][0]].toLowerCase() ? "#1fff5a" : "#ff1f1f" : null}]} value={quizValues.naming[value] != null ? quizValues.naming[value][quizData.naming[value][0]] : null} placeholder={quizData.naming[value][0].length == 1 ? "1-letter" : quizData.naming[value][0].length == 3 ? "3-letter" : "Full Name"} onChangeText={(text) => updateQuizValues({ type: 'naming', amino: value, wanted: quizData.naming[value][0], text})}/>
-                  <TextInput editable={!submit} selectTextOnFocus={!submit} autoComplete="off" autoCorrect={false} spellCheck={false} style={[styles.input, {backgroundColor: submit ? quizValues.naming[value] && quizData.naming[value][1].toLowerCase() == quizValues.naming[value][quizData.naming[value][1]].toLowerCase() ? "#1fff5a" : "#ff1f1f" : null}]} value={quizValues.naming[value] != null ? quizValues.naming[value][quizData.naming[value][1]] : null} placeholder={quizData.naming[value][1].length == 1 ? "1-letter" : quizData.naming[value][1].length == 3 ? "3-letter" : "Full Name"} onChangeText={(text) => updateQuizValues({ type: 'naming', amino: value, wanted: quizData.naming[value][1], text})}/>
+                  <TextInput editable={!submit} selectTextOnFocus={!submit} autoComplete="off" autoCorrect={false} spellCheck={false} style={[styles.input, {backgroundColor: submit ? quizValues.naming[value] && quizData.naming[value][0]?.toLowerCase() == quizValues.naming[value][quizData.naming[value][0]]?.toLowerCase() ? "#1fff5a" : "#ff1f1f" : null}]} value={quizValues.naming[value] != null ? quizValues.naming[value][quizData.naming[value][0]] : null} placeholder={quizData.naming[value][0].length == 1 ? "1-letter" : quizData.naming[value][0].length == 3 ? "3-letter" : "Full Name"} onChangeText={(text) => updateQuizValues({ type: 'naming', amino: value, wanted: quizData.naming[value][0], text})}/>
+                  <TextInput editable={!submit} selectTextOnFocus={!submit} autoComplete="off" autoCorrect={false} spellCheck={false} style={[styles.input, {backgroundColor: submit ? quizValues.naming[value] && quizData.naming[value][1]?.toLowerCase() == quizValues.naming[value][quizData.naming[value][1]]?.toLowerCase() ? "#1fff5a" : "#ff1f1f" : null}]} value={quizValues.naming[value] != null ? quizValues.naming[value][quizData.naming[value][1]] : null} placeholder={quizData.naming[value][1].length == 1 ? "1-letter" : quizData.naming[value][1].length == 3 ? "3-letter" : "Full Name"} onChangeText={(text) => updateQuizValues({ type: 'naming', amino: value, wanted: quizData.naming[value][1], text})}/>
                 </View>
                 {submit ? <View style={styles.row} key={value + "answer"}><Text style={styles.rowText}>{value}: {quizData.naming[value][0]}, {quizData.naming[value][1]}</Text></View> : null}
                 </View>))
@@ -119,7 +118,7 @@ export default AminoQuiz = ({navigation, route}) => {
                       source={AMINO_NAMES[value][2]}
                     />
                 </View>
-                <TextInput editable={!submit} selectTextOnFocus={!submit} autoComplete="off" autoCorrect={false} spellCheck={false} value={quizValues.structures[value]} style={[styles.input, {backgroundColor: submit ? quizValues.structures[value].toLowerCase() == value.toLowerCase() ? "#1fff5a" : "#ff1f1f" : null}]} placeholder="Name" onChangeText={(text) => updateQuizValues({ type: 'structures', amino: value, text})}/>
+                <TextInput editable={!submit} selectTextOnFocus={!submit} autoComplete="off" autoCorrect={false} spellCheck={false} value={quizValues.structures[value]} style={[styles.input, {backgroundColor: submit ? quizValues.structures[value]?.toLowerCase() == value?.toLowerCase() ? "#1fff5a" : "#ff1f1f" : null}]} placeholder="Name" onChangeText={(text) => updateQuizValues({ type: 'structures', amino: value, text})}/>
                 {submit && quizValues.structures[value] != value ? <View style={styles.row} key={value + "answer"}><Text style={styles.rowText}>{value}</Text></View> : null}
               </View>))
             }
@@ -158,15 +157,15 @@ function gradeQuiz(quizValues) {
   let structures = quizValues.structures;
   for (let i in naming) {
     let keys = Object.keys(naming[i])
-    if (naming[i][keys[0]].toLowerCase() == keys[0].toLowerCase()) score++;
-    if (naming[i][keys[1]].toLowerCase() == keys[1].toLowerCase()) score++;
+    if (naming[i][keys[0]]?.toLowerCase() == keys[0]?.toLowerCase()) score++;
+    if (naming[i][keys[1]]?.toLowerCase() == keys[1]?.toLowerCase()) score++;
   }
   for (let i in properties) {
-    if (AMINO_PROPERTIES[i][0].toLowerCase() == properties[i][0].toLowerCase()) score += 2;
-    if (AMINO_PROPERTIES[i][1].toLowerCase() == properties[i][1].toLowerCase()) score += 2;
+    if (AMINO_PROPERTIES[i][0]?.toLowerCase() == properties[i][0]?.toLowerCase()) score += 2;
+    if (AMINO_PROPERTIES[i][1]?.toLowerCase() == properties[i][1]?.toLowerCase()) score += 2;
   }
   for (let i in structures) {
-    if (i.toLowerCase() == structures[i].toLowerCase()) score += 4;
+    if (i?.toLowerCase() == structures[i]?.toLowerCase()) score += 4;
   }
   return score;
 }
